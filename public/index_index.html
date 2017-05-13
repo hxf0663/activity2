@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <base href="[@$cdnPath#]" />
+    <link href="addon/app.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="addon/winpop.css">
+    <link rel="stylesheet" href="addon/sweetalert.css"/>
+    <script src="addon/ls.js"></script>
+    <script>
+    var openid = '[@$openid#]';
+    var ls_openid = '[@$Think.get.ls_openid|default=""#]';
+    // if (LS.get('ls_openid') === null) {
+	//	 if (ls_openid) {
+	//		 location.replace('[@$myapp#]');
+	//	 }else{
+    //     	LS.set('ls_openid', openid);
+    //     	location.replace('[@$myapp#]/index/index/?db=1&ls_openid=' + openid);
+	//	 }
+    // } else {
+    //     if (ls_openid) {
+    //         if (LS.get('ls_openid') != ls_openid) {
+    //             location.replace('[@$myapp#]');
+    //         }
+    //     } else {
+    //         location.replace('[@$myapp#]/index/index/?db=1&ls_openid=' + LS.get('ls_openid'));
+    //     }
+    // }
+    </script>
+    <if condition="!isset($_GET['ls_openid'])">
+        <script>
+        // if (LS.get('ls_openid') === null) {
+        //     LS.set('ls_openid', openid);
+        //     location.replace('[@$myapp#]/index/index/?db=1&ls_openid=' + openid);
+        // } else {
+        //     location.replace('[@$myapp#]/index/index/?db=1&ls_openid=' + LS.get('ls_openid'));
+        // }
+        </script>
+        <php>//exit('');</php>
+    <else />
+        <script>
+        // if (LS.get('ls_openid') === null || LS.get('ls_openid') != ls_openid) {
+        //     location.replace('[@$myapp#]');
+        // }
+        </script>
+    </if>
+    <script src="addon/store.min.js"></script>
+    <script>
+    if (store.enabled) {
+        //本地存储授权获取的用户信息
+        store.set('openid', '[@$openid#]');
+        store.set('userinfo', {
+            openid: '[@$openid#]',
+            nickname: '[@$userinfo.nickname#]',
+            headimg: '[@$userinfo.headimgurl#]'
+        });
+    }
+    </script>
+    <meta name="viewport" content="width=device-width,height=device-height,maximum-scale=1.0,user-scalable=no">
+</head>
+
+<body>
+    <!-- 半透明背景 -->
+    <div id="mask"></div>
+    <div id="loadingText">玩命加载中...(0%)</div>
+    hello [@$userinfo.nickname#] 点赞数：[@$m.click#]
+    <a href="javascript:confirm('关闭自定义Confirm组件吗？', function(flag){if(flag){alert('True');}else{alert('False');}})">自定义Confirm组件</a>
+    <br />
+    <button id="popup">popup</button>
+    <button id="click">click</button>
+    <button id="share">share</button>
+    <button id="upload">upload</button>
+    <button id="lottery">lottery</button>
+    <!-- 表单 -->
+    <div class="box" id="pop1">
+        <div class="close"></div>
+        <input type="text" id="name" placeholder="姓名">
+        <br>
+        <input type="tel" maxlength="11" id="tel" placeholder="手机">
+        <br>
+        <button id="saveinfo">保存</button>
+    </div>
+    <!-- 分享 -->
+    <div id="sharemask">
+        <img id="sharetip" src="addon/img/share.png" style="float:right;" />
+        <div style="color:white; margin: 40% 20% 0; text-align: center">
+            点击右上角分享~
+            <br />
+            <br />
+            <img src="addon/img/ewm.jpg" style="width:250px; margin:0 auto" />
+        </div>
+    </div>
+    <!--图片表遍历-->
+    <volist name="list" id="vo">
+        <li>
+            <a href="#"><img src="upload/[@$vo.pic#]" /></a>
+            <p>排行榜：
+                <php>echo ($list->currentPage()-1)*$pagesize+$i;</php>位
+            </p>
+            <p>微信昵称：[@$vo.nickname#]</p>
+            <p>手机：[@$vo.tel|substr=0,3#]****[@$vo.tel|substr=-3#]</p>
+            <p>编号：[@$vo.num#]</p>
+            <p>票数：[@$vo.click#]</p>
+        </li>
+    </volist>
+    [@$page#]
+    <hr />
+    <!--会员表遍历-->
+    <ul id="rankList">
+        <volist name="list2" id="vo">
+            <li>
+                <a href="#"><img src="[@$vo.headimg#]" width="150" /></a>
+                <p>排行榜：[@$i#]位</p>
+                <p>微信昵称：[@$vo.nickname#]</p>
+                <p>手机：[@$vo.tel|substr=0,3#]****[@$vo.tel|substr=-3#]</p>
+                <p>总票数：[@$vo.click#]</p>
+            </li>
+        </volist>
+    </ul>
+    <php>if($list2->lastPage()>1){</php>
+    <div id="loadMore">加载更多……</div>(总人数：[@$list2->total()#])
+    <php>}</php>
+    [@$tongji#]
+    <if condition="$Think.config.app_debug or $openid eq 'o7WwIt1N5UNnVVukDZ0ns3pG46S4'">
+        <script src="addon/alloy_lever.js"></script>
+    </if>
+    <script src="//cdn.bootcss.com/jquery/2.0.0/jquery.js"></script>
+    <script src="addon/winpop.js"></script>
+    <script src="addon/createjs/preloadjs-0.6.2.min.js"></script>
+    <script src="addon/loading.js"></script>
+    <script src="addon/sweetalert.min.js"></script>
+    <script>
+	var openid = '[@$openid#]';
+    // var myurl = '[@$myurl#]';
+    // var mypath = '[@$mypath#]';
+    var myapp = '[@$myapp#]';
+    var oriPath = '[@$oriPath#]';
+    var cdnPath = '[@$cdnPath#]';
+    var shareData = {
+        title1: '[@$shareData.title1#]',
+        title2: '[@$shareData.title2#]',
+        desc: '[@$shareData.desc#]',
+        link: '[@$shareData.link#]',
+        imgUrl: '[@$shareData.icon#]'
+    };
+    var share_click_link = '[@$oriPath#]/index/share?my_openid=[@$openid#]';
+    var signPackage = {
+        appId: '[@$signPackage.appId#]',
+        timestamp: '[@$signPackage.timestamp#]',
+        nonceStr: '[@$signPackage.nonceStr#]',
+        signature: '[@$signPackage.signature#]'
+    };
+    var checkstr = '[@$checkstr#]';
+    var rearPage = '[@$list2->lastPage()#]';
+    var token1 = '[@$token1#]';
+    var token2 = '[@$token2#]';
+
+    </script>
+    <script src="addon/jweixin-1.0.0.js"></script>
+    <script src="addon/share.js[@$Think.config.app_debug ?= '?'.time()#]"></script>
+    <script src="addon/app.js[@$Think.config.app_debug ?= '?'.time()#]"></script>
+</body>
+
+</html>
