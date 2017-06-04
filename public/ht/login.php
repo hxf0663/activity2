@@ -1,16 +1,16 @@
 <?php
 require("common.php");
+if(isset($_POST['user'])&&isset($_POST['pass'])){
+  if($_POST['user']==conf('adminid')&&$_POST['pass']==conf('adminpwd')){
+    $_SESSION['hxf']=1;
+    exit('{"errcode":0}');
+  }else{
+    exit('{"errcode":1}');
+  }
+}
 if($_SESSION['hxf']==1){
 	header('Location: index.php');
 	exit;
-}
-if(isset($_POST['user'])&&isset($_POST['pass'])){
-	if($_POST['user']==conf('adminid')&&$_POST['pass']==conf('adminpwd')){
-		$_SESSION['hxf']=1;
-		exit('{"errcode":0}');
-	}else{
-		exit('{"errcode":1}');
-	}
 }
 ?>
 <!DOCTYPE html>
