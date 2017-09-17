@@ -44,8 +44,8 @@ wx.config({
     ]
 });
 
-function share_success() {
-    $.get(myapp+'/ajax/afterShare',
+function share_success(type) {
+    $.get(myapp+'/ajax/afterShare/type/'+type,
         function(data, textStatus) {
             if (data.errcode === 0) {
 
@@ -63,7 +63,7 @@ function share_act() {
         link: shareData.link,
         imgUrl: shareData.imgUrl,
         success: function(res) {
-            // share_success();
+            // share_success(1);
         },
     });
     // 监听“分享到朋友圈”
@@ -72,7 +72,7 @@ function share_act() {
         link: shareData.link,
         imgUrl: shareData.imgUrl,
         success: function(res) {
-            // share_success();
+            // share_success(2);
         },
     });
 }

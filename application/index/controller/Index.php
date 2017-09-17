@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+
 use \think\Controller;
 use \think\Db;
 use app\index\model\Member as MemberModel;
@@ -221,9 +222,10 @@ class Index extends Controller
     	}
     	return;
     	//授权中转（方太：跳转授权网址?platId=c2a1809168b6d3fdcb101ff2bfd30f7c&scope=[snsapi_base|snsapi_userinfo]&state=justcode&url=urlencode(url)，返回url?code=(用此CODE拉取信息)）
+        //文档：http://note.youdao.com/noteshare?id=2fd3982c6aadfb077aa29c4212e7d45c
     	if( input('?get.code') ){
     		$code = input('get.code');
-    		$res  = httpGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid={$appid}&secret={$appsecret}&code={$code}&grant_type=authorization_code");
+    		$res  = httpGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxb71ea5a23a76e594&secret=c0bc1c0fb6495fc34f8c9dd5ebdf7402&code={$code}&grant_type=authorization_code");
     		$arr  = json_decode($res, true);
     		if( isset($arr['errcode']) ){
     			trace("errcode:{$arr['errcode']}, errmsg:{$arr['errmsg']}");

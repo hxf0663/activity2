@@ -36,7 +36,7 @@ if(@$_GET['act']=='cls'){
 	deldir('../upload');
 	deldir('download');
 	deldir('../download');
-	go('清零数据成功！数据已备份','?');
+	jump('?');
 }
 if(@$_GET['act']=='input'){
 	if($_FILES['file']['size']!=0){//upload excel

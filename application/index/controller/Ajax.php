@@ -1,5 +1,6 @@
 <?php
 namespace app\index\controller;
+
 use \think\Controller;
 use \think\Db;
 
@@ -206,16 +207,16 @@ class Ajax extends Controller
 		}
 	}
 
-	public function callbackHandler(){
+	public function callbackHandler(){//微信amr格式音频上传与转码处理完成回调
 		trace(input(''));
 	}
 
-	public function afterShare(){
+	public function afterShare($type){//分享成功
 		//do something...
 		return json(['errcode'=>0]);
 	}
 
-	public function tellFans(){
+	public function tellFans(){//判断是否粉丝
 		$info=getinfo( input('get.openid') );
 		$this->ajaxArr['errcode']=@$info['subscribe']==1?0:1;
 		return json($this->ajaxArr);

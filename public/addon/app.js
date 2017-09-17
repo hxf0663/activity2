@@ -24,8 +24,6 @@ $("#sharemask").click(function() {
 
 
 //保存
-var saving1 = 0;
-var status1 = '保存中，请稍候...';
 $("#saveinfo").click(function() {
     if ($("#name").val() === '') {
         alert('请填写姓名');
@@ -37,8 +35,8 @@ $("#saveinfo").click(function() {
         $("#tel").focus();
         return;
     }
-    if (saving1 === 0) {
-        saving1 = 1;
+    if (fsave[0] === 0) {
+        fsave[0] = 1;
         var submitData = {
             token: token1,
             openid: openid,
@@ -48,29 +46,27 @@ $("#saveinfo").click(function() {
         $.post(myapp + '/ajax/saveInfo', submitData,
             function(data, textStatus) {
                 if (data.errcode === 0) {
-                    //saving1=0;//可重复操作
+                    //fsave[0]=0;//可重复操作
                     alert('保存成功！');
-                    status1 = '已保存';
+                    fstat[0] = '已保存';
                 }
             }, "json");
     } else {
-        alert(status1);
+        alert(fstat[0]);
     }
 
 });
 
 //点赞
-var saving2 = 0;
-var status2 = '操作中，请稍候...';
 $("#click").click(function() {
-    if (saving2 === 0) {
-        saving2 = 1;
+    if (fsave[1] === 0) {
+        fsave[1] = 1;
         var _self = $(this);
         // $.get(myapp + '/ajax/tellFans?openid=' + openid,
         //     function(data, textStatus) {
         //         if (data.errcode == 1) {
-        //             status2 = '关注后才能点赞哦~';
-        //             alert(status2);
+        //             fstat[1] = '关注后才能点赞哦~';
+        //             alert(fstat[1]);
         //             return false;
         //         } else {
         //             //...
@@ -81,20 +77,20 @@ $("#click").click(function() {
         $.get(myapp + '/ajax/click?my_openid=' + my_openid + '&by_openid=' + by_openid + '&token=' + token2 + '&checkstr=' + checkstr,
             function(data, textStatus) {
                 if (data.errcode === 0) {
-                    //saving2=0;//可重复操作
+                    //fsave[1]=0;//可重复操作
                     alert('点赞成功！');
-                    status2 = '已点赞';
+                    fstat[1] = '已点赞';
                 } else if (data.errcode == 1) {
-                    //saving2=0;//可重复操作
-                    status2 = '你已经给TA点过赞了';
-                    alert(status2);
+                    //fsave[1]=0;//可重复操作
+                    fstat[1] = '你已经给TA点过赞了';
+                    alert(fstat[1]);
                 }else{
                     alert(data.errmsg);
                 }
             }, "json");
 
     } else {
-        alert(status2);
+        alert(fstat[1]);
     }
 
 });
@@ -146,18 +142,16 @@ $("#loadMore").on('click', function() {
 });
 
 //抽奖
-var saving3 = 0;
-var status3 = '抽奖中，请稍候...';
 $('#lottery').click(function(){
-    if (saving3 === 0) {
-        saving3 = 1;
+    if (fsave[2] === 0) {
+        fsave[2] = 1;
         var submitData = {
             token: token1,
             openid: openid,
         };
         $.post(myapp + '/ajax/lottery', submitData,
             function(data, textStatus) {
-                saving3 = 0;
+                fsave[2] = 0;
                 console.log(data);
                 if(data.win==1){
                     swal('已经中'+data.level+'等奖：'+data.text+'，是否填写信息：'+data.needinfo);
@@ -174,7 +168,7 @@ $('#lottery').click(function(){
                 }
             }, "json");
     } else {
-        swal(status3);
+        swal(fstat[2]);
     }
 });
 

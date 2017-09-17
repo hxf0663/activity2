@@ -162,6 +162,7 @@ function setconf($item,$conf){
 
 function getAT($refresh=0){//获取access_token
 	//$json=file_get_contents("http://campaign.ugomedia.net/wxsdk.php");
+	// $json=file_get_contents("http://fotilewechat.fotile.com/oauth/token?platId=c2a1809168b6d3fdcb101ff2bfd30f7c");
 	$json=file_get_contents("http://wechat.huangxf.com/single/wxapi.php?method=getat");
 	$signPackage=json_decode($json,true);
 	return $signPackage["access_token"];
@@ -182,6 +183,7 @@ function getAT($refresh=0){//获取access_token
 
 function getJT($refresh=0){//获取jsapi_ticket
 	//$json=file_get_contents("http://campaign.ugomedia.net/wxsdk.php");
+	// $json=file_get_contents("http://fotilewechat.fotile.com/oauth/ticket?platId=c2a1809168b6d3fdcb101ff2bfd30f7c");
 	$json=file_get_contents("http://wechat.huangxf.com/single/wxapi.php?method=getjt");
 	$signPackage=json_decode($json,true);
 	return $signPackage["jsapi_ticket"];

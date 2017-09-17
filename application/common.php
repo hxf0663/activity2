@@ -48,6 +48,7 @@ function setconf($item, $conf) {
 
 function getAT($refresh=0){//获取access_token
 	//$json=httpGet("http://campaign.ugomedia.net/wxsdk.php");
+	// $json=file_get_contents("http://fotilewechat.fotile.com/oauth/token?platId=c2a1809168b6d3fdcb101ff2bfd30f7c");
 	$json=httpGet("http://wechat.huangxf.com/single/wxapi.php?method=getat");
 	$signPackage=json_decode($json,true);
 	return $signPackage["access_token"];
@@ -68,6 +69,7 @@ function getAT($refresh=0){//获取access_token
 
 function getJT($refresh=0){//获取jsapi_ticket
 	//$json=httpGet("http://campaign.ugomedia.net/wxsdk.php");
+	// $json=file_get_contents("http://fotilewechat.fotile.com/oauth/ticket?platId=c2a1809168b6d3fdcb101ff2bfd30f7c");
 	$json=httpGet("http://wechat.huangxf.com/single/wxapi.php?method=getjt");
 	$signPackage=json_decode($json,true);
 	return $signPackage["jsapi_ticket"];
@@ -307,4 +309,18 @@ function get_client_ip($type = 0) {
     $long = ip2long($ip);
     $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
+}
+
+function download($url,$filename){ 
+	if($url==""):return false;endif; 
+	ob_start(); 
+	readfile($url); 
+	$file=ob_get_contents(); 
+	ob_end_clean(); 
+	$size=strlen($file); 
+	$local_path="download/";
+	$fp=@fopen($local_path.$filename,"a"); 
+	fwrite($fp,$file); 
+	fclose($fp); 
+	return true; 
 }
